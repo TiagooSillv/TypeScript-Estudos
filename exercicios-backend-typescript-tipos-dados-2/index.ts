@@ -35,9 +35,10 @@ const cadastrarUsuario = (user : Usuario) =>{
     return user;    
 }
 const usuario: Usuario = {
-    nome : 'Laila',
-    email : 'Laila@email',
-    cpf : '000',
+    nome : 'Tiago',
+    email : 'tiago@email',
+    cpf : '0',
+    profissao: 'Programador',
     endereco : {
         cep : '000000',
         rua : 'rua',
@@ -67,14 +68,57 @@ const atualizarUser = (user:Usuario) =>{
     return escreverArquivo(usuarios);
     
 }
+const deleteUser = (cpf : string): Usuario =>{
+    const usuarios = lerArquivo() as Usuario[];
+    
+    const posicaoUsuario = usuarios.findIndex((usuario)=>{
+        return cpf === usuario.cpf;
+    })
+    const user = usuarios.find((usuario)=>{
+        return cpf === usuario.cpf;
+    })
+    if (!user) {
+        throw new Error ('O usuario não foi encontrado!')
+    }
+    
+    usuarios.splice(posicaoUsuario, 1);
+
+    escreverArquivo(usuarios);
+    
+    return user ;
+    
+}
+
+const filtrarProfissao = (profissao: string): Usuario[]=>{
+    const usuarios = lerArquivo() as Usuario[];
+    
+    const user = usuarios.filter((usuario)=>{
+        return profissao === usuario.profissao;
+    })
+    if (!user) {
+        throw new Error ('O usuario não foi encontrado!')
+    }
+        
+    return user ;
+}
+
+
+console.log(filtrarProfissao('Manicure'));
+
+
+// console.log(cadastrarUsuario(usuario));
+
+
+// console.log(deleteUser('000'));
 
 // console.log(cadastrarUsuario(usuario));
 
 
 // console.log(atualizarUser({
-//     nome : 'Ti da silva nascimento',
+//     nome : 'Lila',
 //     email : 'Tiago@email',
 //     cpf : '000',
+//     profissao: 'Manicure',
 //     endereco : {
 //         cep : '000-000',
 //         rua : 'rua',
